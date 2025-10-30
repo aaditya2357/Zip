@@ -102,7 +102,7 @@ const syncWorkspaceUpdation = inngest.createFunction(
         })
     }
 )
-
+/
 // Inngest fuction to delete workspace from  database
 const syncWorkspaceDeletion = inngest.createFunction(
     { id: 'delete-workspace-with-clerk'},
