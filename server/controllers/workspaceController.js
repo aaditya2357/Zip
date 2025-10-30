@@ -13,14 +13,14 @@ export const getUserWorkspaces = async (req, res) => {
                 members: {include: {user: true}},
                 projects: {
                     include:{
-                        tasks: {include: {assignee: true, comments: {include: {author: true}}}},
+                        tasks: {include: {assignee: true, comments: {include: {user: true}}}},
                         members: {include: {user: true}}
                     }
                      
                   },
                   owner: true
             }
-        }),    
+        });    
         res.json({workspaces})
 
         
@@ -40,21 +40,21 @@ export const addMember = async (req, res) => {
         const user = await prisma.user.findUnique({where: {email}});
 
         if(!user){
-            return res.status(400).json({message: "User not found"})
+            return res.status(404).json({message: "User not found"})
         }
 
         if(!workspaceId || !role){
             return res.status(400).json({message: "Missing required parameters"})
         }
 
-        if([!"ADMIN", "MEMBER"].includes(role)){
+        if(!["ADMIN", "MEMBER"].includes(role)){
             return res.status(400).json({message: "Invalid role"})
         }
         //fetch workspace
         const workspace = await prisma.workspace.findUnique({where: {id: workspaceId}, include: {members: true}})
 
         if(!workspace){
-            return res.status(400).json({message: "Workspace not found"})
+            return res.status(404).json({message: "Workspace not found"})
         }
 
         // check creator has admin role
@@ -83,3 +83,4 @@ export const addMember = async (req, res) => {
         console.log(error);
         res.status(500).json({error: error.code || error.message })
     }
+}

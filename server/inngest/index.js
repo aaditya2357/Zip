@@ -7,7 +7,7 @@ export const inngest = new Inngest({ id: "Zip-crm" });
 // Inngest function to save user data to a database
 const syncUserCreation = inngest.createFunction(
     {id: 'sync-user-from-clerk'},
-    {event: 'clerk/user.created'}
+    {event: 'clerk/user.created'},
     async ({event})=>{
         const {data} = event
         await prisma.user.create({
@@ -24,7 +24,7 @@ const syncUserCreation = inngest.createFunction(
 // Inngest function to delete  user data to a database
 const syncUserDeletion = inngest.createFunction(
     {id: 'delete-user-from-clerk'},
-    {event: 'clerk/user.deleted'}
+    {event: 'clerk/user.deleted'},
     async ({event})=>{
         const {data} = event
         await prisma.user.delete({
@@ -39,7 +39,7 @@ const syncUserDeletion = inngest.createFunction(
 // Inngest function to update user data to a database
 const syncUserUpdation = inngest.createFunction(
     {id: 'update-user-from-clerk'},
-    {event: 'clerk/user.updated'}
+    {event: 'clerk/user.updated'},
     async ({event})=>{
         const {data} = event
         await prisma.user.update({
@@ -121,7 +121,7 @@ const syncWorkspaceDeletion = inngest.createFunction(
 
 const syncWorkspaceMemberCreation = inngest.createFunction(
     {id: 'sync-workspace-member-from-clerk'},
-    {event: 'clerk/organizationInvitation.accepted'}
+    {event: 'clerk/organizationInvitation.accepted'},
     async ({event}) => {
         const {data} = event;
         await prisma.workspaceMember.create({
